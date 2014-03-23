@@ -13,36 +13,37 @@ function fix_team(team)
     // means that the team shows up as A on the gosugamers match listing page
     // and we want to write it as B on the match table
     teams = [
-             ['Evil...', 'EG'],
-             ['Wild Witch...', 'WWD'],
-             ['CNB Dota2', 'CNB'],
-             ['Meet Your...', 'MYM'],
-             ['Team Liquid', 'TL'],
-             ['Cloud9', 'C9'],
-             ['Revenge eSports', 'Revenge'],
-             ['ESFXtv|PowerR...', 'PR'],
-             ['Zero Latitude', 'ZL'],
-             ['MiTH.TrusT.Do...', 'MiTH'],
-             ['Rex Regum Qeon', 'RRQ'],
-             ['Monkey Spanner', 'MkSp'],
-             ['MVP Phoenix', 'MVP.P'],
-             ['Fnatic.Dota2', 'Fnatic'],
-             ['Insane Gaming', 'Insane'],
-             ['The Retry', 'TR'],
-             ['Scythe Gaming', 'Scythe'],
-             ['Arrow Gaming', 'Arrow'],
-             ['Invictus Gaming', 'iG'],
-             ['Union Gaming', 'UG'],
-             ['The House is...', 'THD'],
-             ['Virtus Pro-Dota2', 'VP'],
-             ['Ahead Gaming', 'Ahead'],
-             ['RoX.KIS.Dota2', 'RoX.KIS'],
-             ['Mineski.Dota2', 'Mineski'],
-             ['First Departure', 'FD'],
-             ['Sigma...', 'Sigma'],
-             ['Team Dog', 'Dog'],
-             ['MVP HOT6', 'MVP.h6']
-            ];
+     ['Ahead Gaming', 'Ahead'],
+     ['Arrow Gaming', 'Arrow'],
+     ['Cloud9', 'C9'],
+     ['CNB Dota2', 'CNB'],
+     ['ESFXtv|PowerR...', 'PR'],
+     ['Evil...', 'EG'],
+     ['First Departure', 'FD'],
+     ['Fnatic.Dota2', 'Fnatic'],
+     ['Insane Gaming', 'Insane'],
+     ['Invictus Gaming', 'iG'],
+     ['Meet Your...', 'MYM'],
+     ['Mineski.Dota2', 'Mineski'],
+     ['MiTH.TrusT.Do...', 'MiTH'],
+     ['Monkey Spanner', 'MkSp'],
+     ['MVP HOT6', 'MVP.h6'],
+     ['MVP Phoenix', 'MVP.P'],
+     ['Revenge eSports', 'Revenge'],
+     ['Rex Regum Qeon', 'RRQ'],
+     ['RoX.KIS.Dota2', 'RoX.KIS'],
+     ['Scythe Gaming', 'Scythe'],
+     ['Sigma...', 'Sigma'],
+     ['Team Dog', 'Dog'],
+     ['Team Empire...', 'Empire'],
+     ['Team Liquid', 'Liquid'],
+     ['The House is...', 'THD'],
+     ['The Retry', 'TR'],
+     ['Union Gaming', 'UG'],
+     ['Wild Witch...', 'WWD'],
+     ['Virtus Pro-Dota2', 'VP'],
+     ['Zero Latitude', 'ZL'],
+    ];
             
     for (k = 0; k < teams.length; k++)
     {
@@ -55,21 +56,27 @@ function fix_team(team)
     return team;
 }
 
-// returns the abbreviation for the tournament by its identifier in the URI
-function fix_tournament(tournament)
+// returns string of the form "n|ABC" where n is the number of games per match and
+// ABC is the abbreviation for the tournament+stage identified
+function tournament_string(tournament)
 {
     tournaments = [
-         ['3364-asian-cyber-games-invitational-best-of-the-best', 'ACG'],
-         ['3398-starladder-starseries-season-9', 'SL'],
-         ['3465-wd-dota-2-pro-series', 'WDPS'],
-         ['3135-joindota-league-season-1', 'jDL'],
-         ['3145-t-k-o-tournament', 'TKO'],
-         ['3340-dotacinema-captains-draft-invitational', 'DCCD'],
-         ['3336-korea-dota-2-league', 'KDL'],
-         ['3391-gfinity-dota-2-tournament', 'Gfinity'],
-         ['3344-netolic-pro-league-5-east', 'Netolic'],
-         ['3243-dota-2-champions-league-2', 'D2CL']
-        ];
+     ['3135-joindota-league-season-1/856-divisions-1/3136-europe', '2|jDL'],
+     ['3135-joindota-league-season-1/856-divisions-1/3137-america', '2|jDL'],
+     ['3135-joindota-league-season-1/856-divisions-1/3138-asia', '2|jDL'],
+     ['3145-t-k-o-tournament/859-stage-two/3149-america', '2|TKO'],
+     ['3201-netolic-pro-league-5-west/872-main-event/3204-main-event', '5|Netolic'],
+     ['3243-dota-2-champions-league-2/882-playoffs/3246-playoffs', '5|D2CL'],
+     ['3336-korea-dota-2-league', '3|KDL'],
+     ['3340-dotacinema-captains-draft-invitational/902-round-robin/3341-round-robin', '3|DCCD'],
+     ['3364-asian-cyber-games-invitational-best-of-the-best/911-playoffs/3369-playoffs', '3|ACG'],
+     ['3386-dreamleague-season-1/916-regular-season/3387-round-robin', '1|DL'],
+     ['3391-gfinity-dota-2-tournament', '1|Gfinity'],
+     ['3398-starladder-starseries-season-9/918-regional-divisions/3399-europe', '1|SL'], 
+     ['3398-starladder-starseries-season-9/918-regional-divisions/3400-america', '1|SL'],
+     ['3465-wd-dota-2-pro-series/933-pro-series/3466-pro-series-1', '1|WDPS'],
+     ['3473-techlabs-cup-april-2014/934-qualifiers/3474-qualifiers', '3|Techlabs'],
+    ];
 
     for (k = 0; k < tournaments.length; k++)
     {
@@ -79,34 +86,7 @@ function fix_tournament(tournament)
         }
     }
 
-    return "???";
-}
-
-// returns number of games per match for the given tournament
-function tournament_matches(tournament)
-{
-    bestofs = [
-               ['ACG', 3],
-               ['SL', 3],
-               ['WDPS', 1],
-               ['jDL', 2],
-               ['KDL', 3],
-               ['DCCD', 3],
-               ['TKO', 2],
-               ['Gfinity', 1],
-               ['Netolic', 3],
-               ['D2CL', 5]
-              ];
-              
-    for (k = 0; k < bestofs.length; k++)
-    {
-        if (tournament === bestofs[k][0])
-        {
-            return bestofs[k][1];
-        }
-    }
-              
-    return '?';
+    return "?|???";
 }
 
 function generate()
@@ -147,15 +127,15 @@ function generate()
             j = pct1.search(/\)/);
             pct1 = pct1.substr(0,j);
             
-            out = out + "**" + team1 + "**|" + pct1 + "|Vs.|";
+            // out = out + "**" + team1 + "**|" + pct1 + "|Vs.|";
+            out = out + "**" + team1 + "**| % |vs|";
             
+            // tournament+stage identifier between "tournaments/" and "/matches"
+            // in match URI
             tournament = a[i-1];
             tournament = tournament.substr(28);
-            j = tournament.search(/\//);
+            j = tournament.search(/\/matches/);
             tournament = tournament.substr(0,j);
-            tournament = fix_tournament(tournament);
-
-            bestof = tournament_matches(tournament);
         }
         
         /* team 2 data
@@ -201,13 +181,9 @@ function generate()
                 note = "";
             }
             
-            if (tournament == "DCCD")
-            {
-                note = "Captain's draft" + note;
-            }
-            
-            out = out + "**" + team2 + "**|" + pct2 + "|";
-            out = out + "BO" + bestof + "|" + tournament + "|||" + note + "\n";
+            // out = out + "**" + team2 + "**|" + pct2 + "|";
+            out = out + "**" + team2 + "**| % |";
+            out = out + "BO" + tournament_string(tournament) + "|[Place Bet]()||" + note + "\n";
         }
         
         // stop once past Upcoming Matches
@@ -260,10 +236,8 @@ function generate()
 <h2>Notes</h2>
 <ul>
   <li>This table is no more accurate than GosuGamers' match listings.</li>
-  <li>This tool is intended to be used at around the time that the daily thread is posted on /r/dota2loungebets, so only the matches within 24 hours are relevant.  A comment will be added if a match is over 24 hours away, so be sure to check if those belong in the day's thread or not.</li>
-  <li>If there are more matches within 24 hours than are on the first page of the GosuGamers match list, you'll need to fetch the second page also: <a href="http://www.gosugamers.net/dota2/gosubet?u-page=2">page 2</a> <a href="view-source:http://www.gosugamers.net/dota2/gosubet?u-page=2">[source]</a>.  Manually concatenate them (and delete the header from the second table).
-  <li>This translation script relies on manually-entered data (team and tournament abbreviations, and how many games per match in a tournament).  As new teams and tournaments are added, the lookup tables need to be updated.  To provide updated information, please leave feedback in <a href="">this thread</a> or send a pull request on <a href="https://github.com/dota2dino/dota2dino.github.io">the  GitHub page for this site</a>.</li>
-  <li>The number of games in a match may change throughout a tournament, and even if this number is updated correctly it still may not be correct.  For example, Starladder matches start as 1, then 3, then 5 games per match, but one region's BO1 phase may overlap another region's BO3 phase.  Unfortunately, without a dynamic language it's not possible the check the individual match pages for the number of games.</li>
+  <li>This tool is intended to be used at around the time that the daily thread is posted on /r/dota2loungebets, so only the matches within 24 hours are relevant.  A comment will be added if a match is over 24 hours away, so be sure to check if those belong in the day's thread or not.  If there are more matches within 24 hours than are on the first page of the GosuGamers match list, you'll need to fetch the second page also: <a href="http://www.gosugamers.net/dota2/gosubet?u-page=2">page 2</a> <a href="view-source:http://www.gosugamers.net/dota2/gosubet?u-page=2">[source]</a>.  Manually concatenate them (and delete the header from the second table).
+  <li>This translation script relies on manually-entered data (team and tournament abbreviations, and how many games per match in a tournament).  As new teams and tournaments are added, the lookup tables need to be updated.  To provide updated information, please leave feedback in <a href="http://www.reddit.com/r/dota2loungebets/comments/2123zi/utility_for_match_thread_creators/">this thread</a>, send a <a href="http://www.reddit.com/message/compose/?to=dota2dino">PM to dota2dino</a> on reddit, or send a pull request on <a href="https://github.com/dota2dino/dota2dino.github.io">the  GitHub page for this site</a>.</li>
 </ul>
 
 </body>
