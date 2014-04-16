@@ -1,10 +1,318 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+<script type="text/javascript">
+
+// returns a team name for a team name in the match list
+//   name in the match list may be of the form "Team ..." or not
+//   team name returned may be an abbreviation
+function fix_team(team)
+{
+    // list of team names, a line of the form ['A', 'B']
+    // means that the team shows up as A on the gosugamers match listing page
+    // and we want to write it as B on the match table
+    teams = [
+     ["4 Friends +...", "4FC"],
+     ["Ahead Gaming", "Ahead"],
+     ["Arrow Gaming", "Arrow"],
+     ["Aware Gaming", "Aware"],
+     ["Can't Describe", "Can't Desc."],
+     ["Cede Nullis", "Cede"],
+     ["Cloud9", "C9"],
+     ["CNB Dota2", "CNB"],
+     ["CNB.cn", "CNB"],
+     ["ESFXtv|PowerR...", "PR"],
+     ["Everlast.Game...", "Everlast"],
+     ["Evil...", "EG"],
+     ["First Departure", "FD"],
+     ["Fnatic.Dota2", "Fnatic"],
+     ["GOOMBA Gaming", "Goomba"],
+     ["hehe united", "hehe"],
+     ["HyperGloryTeam", "HGT"],
+     ["Insane Gaming", "Insane"],
+     ["Invictus Gaming", "iG"],
+     ["Kompas Gaming", "Kompas"],
+     ["Maven Gaming", "Maven"],
+     ["Meet Your...", "MYM"],
+     ["Mineski.Dota2", "Mineski"],
+     ["MiTH.TrusT.Do...", "MiTH"],
+     ["Monkey Spanner", "MkSp"],
+     ["MVP HOT6", "MVP.h6"],
+     ["MVP Phoenix", "MVP.P"],
+     ["Natus...", "Na'Vi"],
+     ["neXtPlease! Gaming", "neXtPlease"],
+     ["Orange Esports", "Orange"],
+     ["Osiris Gaming", "Osiris"],
+     ["Revenge eSports", "Revenge"],
+     ["Rex Regum Qeon", "RRQ"],
+     ["RoX.KIS.Dota2", "RoX.KIS"],
+     ["Scythe Gaming", "Scythe"],
+     ["Sigma...", "Sigma"],
+     ["Team Dog", "Dog"],
+     ["Team DK", "DK"],
+     ["Team Empire...", "Empire"],
+     ["Team Liquid", "Liquid"],
+     ["The House is...", "THD"],
+     ["The Retry", "TR"],
+     ["To Be Decided", "TBD"],
+     ["Tongfu.Wanzhou", "Tongfu.Wz"],
+     ["Total...", "TotalAggr"],
+     ["tRICKED esport", "Tricked"],
+     ["Union Gaming", "UG"],
+     ["Wild Witch...", "WWD"],
+     ["uebelst-gamynG", "uebelst"],
+     ["Vhoul Assassins", "Vhoul"],
+     ["ViCi Gaming", "VG"],
+     ["Virtus Pro-Dota2", "VP"],
+     ["XtremeXPC...", "XtremeXPC"],
+     ["Zero Latitude", "ZL"],
+     ["CIS", "CIS"],
+     ["NewBee", "NewBee"],
+     ["ABCBA", "ABCBA"],
+     ["talent", "talent"],
+     ["Execration", "Execration"],
+     ["CIS", "CIS"],
+     ["TI9 Champion", "TI9"],
+     ["Paa.cn", "Paa.cn"],
+     ["Titan", "Titan"],
+     ["Alliance", "Alliance"],
+     ["Relax", "Relax"],
+     ["No Earthspirit", "No ES"],
+     ["Shadows of...", "SotP"],
+     ["Zephyr", "Zephyr"],
+     ["Sneaky Nyx...", "SNA"],
+     ["Isurus...", "Isurus"],
+     ["NEXT.kz", "Next.kz"],
+    ];
+            
+    for (k = 0; k < teams.length; k++)
+    {
+        if (team === teams[k][0])
+        {
+            return teams[k][1];
+        }
+    }
+
+    return team;
+}
+
+// returns string of the form "n|ABC" where n is the number of games per match and
+// ABC is the abbreviation for the tournament+stage identified
+function tournament_string(tournament)
+{
+    tournaments = [
+     ['3135-joindota-league-season-1/856-divisions-1/3136-europe', '2|jDL'],
+     ['3135-joindota-league-season-1/856-divisions-1/3137-america', '2|jDL'],
+     ['3135-joindota-league-season-1/856-divisions-1/3138-asia', '2|jDL'],
+     ['3145-t-k-o-tournament/859-stage-two/3149-america', '2|TKO'],
+     ['3145-t-k-o-tournament/860-stage-three/3150-europe', '3|TKO'],
+     ['3145-t-k-o-tournament/860-stage-three/3151-america', '3|TKO'],
+     ['3201-netolic-pro-league-5-west/872-main-event/3204-main-event', '5|Netolic'],
+     ['3243-dota-2-champions-league-2/882-playoffs/3246-playoffs', '5|D2CL'],
+     ['3336-korea-dota-2-league', '3|KDL'],
+     ['3340-dotacinema-captains-draft-invitational/902-round-robin/3341-round-robin', '3|DCCD'],
+     ['3340-dotacinema-captains-draft-invitational/903-playoffs', '5|DCCD'],
+     ['3344-netolic-pro-league-5-east/905-main-event/3347-main-event', '3|Netolic'],
+     ['3364-asian-cyber-games-invitational-best-of-the-best/911-playoffs/3369-playoffs', '3|ACG'],
+     ['3386-dreamleague-season-1/916-regular-season/3387-round-robin', '1|DL'],
+     ['3391-gfinity-dota-2-tournament', '1|Gfinity'],
+     ['3398-starladder-starseries-season-9/918-regional-divisions/3399-europe', '1|SL'], 
+     ['3398-starladder-starseries-season-9/918-regional-divisions/3400-america', '1|SL'],
+     ['3398-starladder-starseries-season-9/919-regional-finals/3404-america', '3|SL'],
+     ['3465-wd-dota-2-pro-series/933-pro-series/3466-pro-series-1', '1|WDPS'],
+     ['3473-techlabs-cup-april-2014/934-qualifiers/3474-qualifiers', '3|Techlabs'],
+     ['3489-dota-2-romania-spring-cup/938-group-stage/3490-group-a', '1|RSC'],
+     ['3489-dota-2-romania-spring-cup/938-group-stage/3491-group-b', '1|RSC'],
+     ['3489-dota-2-romania-spring-cup/938-group-stage/3492-group-c', '1|RSC'],
+     ['3489-dota-2-romania-spring-cup/938-group-stage/3493-group-d', '1|RSC'],
+     ['3489-dota-2-romania-spring-cup/939-playoff/3494-playoff', '5|RSC'],
+     ['3504-esports-champions-league-2014/942-group-stage/3505-group-a', '1|ECL'],
+     ['3504-esports-champions-league-2014/942-group-stage/3506-group-b', '1|ECL'],
+     ['3510-wpc-ace-league-2014/944-group-stage/3511-east', '2|WPC'],
+     ['3534-excellent-moscow-cup/954-online-season/3535-round-robin', '1|EMC'],
+     ['3537-d2l-western-challenge/956-round-robin/3538-round-robin', '3|D2LWC'],
+     ['3567-fragbite-masters-season-2/962-group-stage/3568-group-a', '1|fbM'],
+     ['3567-fragbite-masters-season-2/962-group-stage/3569-group-b', '1|fbM'],
+     ['3567-fragbite-masters-season-2/962-group-stage/3570-group-c', '1|fbM'],
+     ['3567-fragbite-masters-season-2/963-consolidation-stage/3571-consolidation-bracket', '3|fbM'],
+     ['3567-fragbite-masters-season-2/964-playoffs/3572-playoffs', '3|fbM'],
+     ['3579-the-inaugural/966-pre-qualifiers/3581-sea', '1|Inaug'],
+     ['3597-starladder-starseries-season-9-european-tiebreakers/971-group/3598-tiebreaker-group', '1|SL'],
+     ['3609-american-dota-league/977-group-stage/3611-group-b', '2|ADL'],
+     ['3614-wvw-national-e-sports-professional-league', '1|WVW'],
+     ['3579-the-inaugural/968-group-stage/3584-group-b', '3|Inaugural'],
+     ['3642-wpc-ace-league-2014-qualifier-tiebreakers/981-tiebreakers/3643-west', '1|WPC'],
+     ['3650-dota-2-champions-league-3-qualifiers-group-b', '1|D2CL'],
+     ['3609-american-dota-league-season-2/977-group-stage/3611-group-b', '2|ADL'],
+     ['3465-wd-dota-2-pro-series/933-pro-series/3467-pro-series-2', '3|WDPS'],
+     ['3600-esl-one/973-eu-groups/3604-group-d', '1|ESL'],
+     ['3579-the-inaugural/968-group-stage/3583-group-a', '3|Inaugural'],
+     ['3398-starladder-starseries-season-9/982-playoffs-groups/3652-group-a', '1|SL'],
+     ['3398-starladder-starseries-season-9/982-playoffs-groups/3653-group-b', '1|SL'],
+     ['3600-esl-one/973-eu-groups/3603-group-c', '1|ESL'],
+    ];
+
+    for (k = 0; k < tournaments.length; k++)
+    {
+        if (tournament === tournaments[k][0])
+        {
+            return tournaments[k][1];
+        }
+    }
+
+    return "?|???";
+}
+
+function generate()
+{
+    s = document.getElementById("input").value;
+    m = document.getElementById("message").value;
+    
+    a = s.split("\n");
+    
+    out = "Team 1|  ||Team 2|  |Format|League|[D2Lng](http://www.dota2lounge.com)|[D2W](http://www.dota2wage.com)|Notes\n:---------|:---------:|:---------:|:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------\n";
+    
+    // scan for Upcoming Matches section
+    i = 0;
+    while (!/<h2>Upcoming Matches/.test(a[i]) && i++ < a.length);
+    
+    for ( ; i < a.length; i++) 
+    {
+        /* team 1 and tournament data
+    
+           these lines are of the form
+            
+            <a href="/dota2/tournaments/3364-asian-cyber-games-invitational-best-of-the-best/911-playoffs/3369-playoffs/matches/37308-titan-vs-zero-latitude" class="match hover-background" style="background-image: url('/images/icons/games/list/dota2.png');">
+            <span class="opp opp1">
+            <span>Titan</span><span title="Malaysia" class="flag MY"></span> </span>
+            <span class="bet-percentage bet1">(89%)</span>
+
+        */
+        if (/opp opp1/.test(a[i]))
+        {
+            team1 = a[i+1];
+            team1 = team1.substr(6);
+            j = team1.search(/<\/span>/);
+            team1 = team1.substr(0,j);
+            team1 = fix_team(team1);
+            
+            pct1 = a[i+2];
+            pct1 = pct1.substr(35);
+            j = pct1.search(/\)/);
+            pct1 = pct1.substr(0,j);
+            
+            // out = out + "**" + team1 + "**|" + pct1 + "|Vs.|";
+            out = out + "**" + team1 + "**| % |vs|";
+            
+            // tournament+stage identifier between "tournaments/" and "/matches"
+            // in match URI
+            tournament = a[i-1];
+            tournament = tournament.substr(28);
+            j = tournament.search(/\/matches/);
+            tournament = tournament.substr(0,j);
+        }
+        
+        /* team 2 data
+    
+           these lines are of the form
+            
+            <span class="bet-percentage bet2">(11%)</span>
+            <span class="opp opp2">
+            <span title="Indonesia" class="flag ID"></span><span>Zero Latitude</span> </span>
+
+        */
+        if (/opp opp2/.test(a[i]))
+        {
+            team2 = a[i+1];
+            j = team2.search(/<span>/);
+            team2 = team2.substr(j+6);
+            j = team2.search(/<\/span>/);
+            team2 = team2.substr(0,j);            
+            team2 = fix_team(team2);
+            
+            pct2 = a[i-1];
+            pct2 = pct2.substr(35);
+            j = pct2.search(/\)/);
+            pct2 = pct2.substr(0,j);
+        }
+        
+        /* time to match, of the form
+        
+            <span class="live-in">
+            1h 8m </span>
+
+        */
+        if (/<span class="live-in">/.test(a[i]))
+        {   
+            t = a[i+1];
+        
+            if (/d/.test(t))
+            {
+                note = "starts in >24 hr";
+            }
+            else
+            {
+                note = "";
+            }
+            
+            // out = out + "**" + team2 + "**|" + pct2 + "|";
+            out = out + "**" + team2 + "**| % |";
+            out = out + "BO" + tournament_string(tournament) + "|[Place Bet]()||" + note + "\n";
+        }
+        
+        // stop once past Upcoming Matches
+        if (/Recent Results/.test(a[i]))
+        {
+            break;
+        }
+    }
+    
+    out = out + "\n" + m + "\n\n";
+    out = out + "Useful Links:\n\n[Gosubet](http://www.gosugamers.net/dota2/gosubet) | [joinDOTA](http://www.joindota.com/en/start) | [List of teams' dotabuff](http://www.reddit.com/r/dota2loungebets/comments/21g1sz/list_of_dota_2_teams_dotabuffs_v2/) | [How to participate in Guild Chat](http://www.reddit.com/r/dota2loungebets/comments/1qivbl/guild_rd2lb_guild_is_open_for_people_to_join/)";
+    
+    document.getElementById("output").value = out;
+    document.getElementById("output").select();
+}    
+</script>
+
 <head>
-	<title>dota2loungebets tools</title>
+	<title>Match table generator</title>
 </head>
 <body>
-<a href="match_table_generator.html">Match table generator</a>
+
+<h1>Match table generator</h1>
+
+<p>This tool generates a match table for the <a href="http://www.reddit.com/r/dota2loungebets/">dota2loungebets forum</a> on reddit.  To use this tool:
+<ol>
+  <li>Go to the <a href="http://www.gosugamers.net/dota2/gosubet?u-page=1">GosuGamers match listing page</a> and view source (or go straight to <a href="view-source:http://www.gosugamers.net/dota2/gosubet?u-page=1">the page source</a> in Chrome & Firefox).</li>
+  <li>Select all and copy.</li>
+  <li>Paste this into the Page Source box on this page.</li>
+  <li>Optionally put something in the Message box.</li>
+  <li>Click Generate, the output will appear in the box below (already selected).  Copy it, and use it to start a <a href="http://www.reddit.com/r/dota2loungebets/submit?selftext=true">new thread on /r/dota2loungebets</a>.</li>
+</ol>
+</p>
+
+<p>
+<b>Page Source</b><br />
+<textarea rows="4" cols="40" id="input"></textarea><br />
+<b>Message</b><br />
+<textarea rows="1" cols="40" id="message">
+
+</textarea><br />
+<button type="submit" id="generate" onclick="generate()">Generate</button>
+</p>
+
+<p>
+<b>Output</b><br />
+<textarea rows="4" cols="40" id="output"></textarea>
+</p>
+
+<h2>Notes</h2>
+<ul>
+  <li>This table is no more accurate than GosuGamers' match listings.</li>
+  <li>This tool is intended to be used at around the time that the daily thread is posted on /r/dota2loungebets, so only the matches within 24 hours are relevant.  A comment will be added if a match is over 24 hours away, so be sure to check if those belong in the day's thread or not.  If there are more matches within 24 hours than are on the first page of the GosuGamers match list, you'll need to fetch the second page also: <a href="http://www.gosugamers.net/dota2/gosubet?u-page=2">page 2</a> <a href="view-source:http://www.gosugamers.net/dota2/gosubet?u-page=2">[source]</a>.  Manually concatenate them (and delete the header from the second table).
+  <li>This translation script relies on manually-entered data (team and tournament abbreviations, and how many games per match in a tournament).  As new teams and tournaments are added, the lookup tables need to be updated.  To provide updated information, please leave feedback in <a href="http://www.reddit.com/r/dota2loungebets/comments/2123zi/utility_for_match_thread_creators/">this thread</a>, send a <a href="http://www.reddit.com/message/compose/?to=dota2dino">PM to dota2dino</a> on reddit, or send a pull request on <a href="https://github.com/dota2dino/dota2dino.github.io">the  GitHub page for this site</a>.</li>
+</ul>
+
 </body>
 </html>
