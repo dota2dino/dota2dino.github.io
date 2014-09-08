@@ -401,7 +401,7 @@ function generate()
     
     a = s.split("\n");
     
-    out = "Team 1|  ||Team 2|  |Format|League|[D2Lng](http://www.dota2lounge.com)|[D2W](http://www.dota2wage.com)|Notes\n:---------|:---------:|:---------:|:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------\n";
+    out = "Team 1|  ||Team 2|  |Format|League|[D2Lng](http://www.dota2lounge.com)|[D2W](http://www.dota2wage.com)|[D2BY](http://www.dota2bestyolo.com/)|Notes\n:---------|:---------:|:---------:|:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------\n";
     
     // scan for Upcoming Matches section
     i = 0;
@@ -488,7 +488,7 @@ function generate()
             
             // out = out + "**" + team2 + "**|" + pct2 + "|";
             out = out + "**" + team2 + "**| % |";
-            out = out + "BO" + tournament_string(tournament) + "|✓||" + note + "\n";
+            out = out + "BO" + tournament_string(tournament) + "|✓|||" + note + "\n";
         }
         
         // stop once past Upcoming Matches
