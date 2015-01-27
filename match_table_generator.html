@@ -191,6 +191,7 @@ function fix_team(team)
      ["Hard Random", "Random"],
      ["Natus Vincere.US", "NaVi.US"],
      ["Moscow Five", "M5"],
+     ["Moscow Five...", "M5.int"],
      ["Crypsis", "Crypsis"],
      ["Dream Destroyers", "DD"],
      ["Secret Team", "Secret"],
@@ -231,6 +232,15 @@ function fix_team(team)
      ["Immortal...", "Immortal"],
      ["ArtStyle Team", "ArtStyle"],
      ["BUHLO", "BUHLO"],
+     ["Little...", "LB4e"],
+     ["Basically...", "BU"],
+     ["Vega Squadron", "Vega"],
+     ["Meepwn'd", "Meepwnd"],
+     ["FireDota", "Fire"],
+     ["Energy Pacemaker", "EnergyPace"],
+     ["EHOME", "EHOME"],
+     ["Big God", "Big God"],
+     ["Team Secret", "Secret"],
     ];
             
     for (k = 0; k < teams.length; k++)
@@ -482,6 +492,15 @@ function tournament_string(tournament)
      ['5207-starladder-season-11/1365-round-robin-season/5208-europe', '1|SLXI'],
      ['5001-d2l-season-5/1316-round-robin/5003-west', '3|D2L'],
      ['5207-starladder-season-11/1365-round-robin-season/5211-america', '1|SLXI'],
+     ['5487-bridon-open-cup/1437-final-group/5492-group', '1|BRL'],
+     ['5579-joindota-masters-15-1', '5|jDM'],
+     ['5542-dota-pit-league-season-3/1454-qualifiers/5543-bracket', '3|Dota Pit'],
+     ['5606-jd-mlg-pro-league-1/1468-league/5608-europe-b', '2|jD MLG'],
+     ['5487-bridon-open-cup/1438-playoffs/5493-bracket', '3|BRL'],
+     ['5633-bountyhunter-america-showdown-3', '5|BH'],
+     ['5555-dota-2-asia-championships/1459-wild-card/5556-group', '1|DAC'],
+     ['5632-bounty-hunter-europe-showdown', '5|BH'],
+     ['5555-dota-2-asia-championships/1460-round-robin/5558-group', '1|DAC'],
     ];
 
     for (k = 0; k < tournaments.length; k++)
@@ -506,7 +525,7 @@ function generate()
     
     // scan for Upcoming Matches section
     i = 0;
-    while (!/<h2>Upcoming Matches/.test(a[i]) && i++ < a.length);
+    while (!/<h2>DotA 2 Upcoming Matches/.test(a[i]) && i++ < a.length);
     
     for ( ; i < a.length; i++) 
     {
@@ -523,7 +542,8 @@ function generate()
         if (/opp opp1/.test(a[i]))
         {
             team1 = a[i+1];
-            team1 = team1.substr(6);
+            j = team1.search(/<span>/);
+            team1 = team1.substr(j+6);
             j = team1.search(/<\/span>/);
             team1 = team1.substr(0,j);
             team1 = fix_team(team1);
@@ -539,7 +559,8 @@ function generate()
             // tournament+stage identifier between "tournaments/" and "/matches"
             // in match URI
             tournament = a[i-1];
-            tournament = tournament.substr(28);
+            j = tournament.search(/dota2\/tournaments\//);
+            tournament = tournament.substr(j+18);
             j = tournament.search(/\/matches/);
             tournament = tournament.substr(0,j);
         }
@@ -600,7 +621,7 @@ function generate()
     }
     
     out = out + "\n" + m + "\n\n";
-    out = out + "Useful Links:\n\n[Gosubet](http://www.gosugamers.net/dota2/gosubet) | [joinDOTA](http://www.joindota.com/en/start) | [List of teams' dotabuff](http://www.reddit.com/r/dota2loungebets/comments/21g1sz/list_of_dota_2_teams_dotabuffs_v2/) | [How to participate in Guild Chat](http://www.reddit.com/r/dota2loungebets/comments/1qivbl/guild_rd2lb_guild_is_open_for_people_to_join/)";
+    out = out + "Useful Links:\n\n[Gosubet](http://www.gosugamers.net/dota2/gosubet) | [joinDOTA](http://www.joindota.com/en/start) | [List of teams' dotabuff](http://www.reddit.com/r/dota2loungebets/comments/21g1sz/list_of_dota_2_teams_dotabuffs_v2/) | [How to participate in Guild Chat](http://www.reddit.com/r/dota2loungebets/comments/1qivbl/guild_rd2lb_guild_is_open_for_people_to_join/) | [Dailydota2](http://dailydota2.com) | [Trackdota](http://trackdota.com)";
     
     document.getElementById("output").value = out;
     document.getElementById("output").select();
