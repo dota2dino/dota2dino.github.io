@@ -278,6 +278,12 @@ function fix_team(team)
      ["NoName Romania", "NoName.Rom"],
      ["Immortal Team", "Immortal"],
      ["RAGE eSports", "RAGE"],
+     ["RTA", "RTA"],
+     ["Veni Vidi Vici", "VVV"],
+     ["Balkan Bears Ro", "BBears"],
+     ["Fight Club", "Fight Club"],
+     ["Project Dota", "Proj.Dota"],
+     ["Tractor", "Tractor"],
     ];
             
     for (k = 0; k < teams.length; k++)
@@ -561,6 +567,8 @@ function tournament_string(tournament)
      ['6019-romania-dota-2-pro-league/1588-group-stage/6020-group-stage', '2|RDPL'],
      ['5998-jd-mlg-pro-league-1-tiebreakers/1583-ties/6000-eu-group-b', '1|jDMLG'],
      ['5971-starladder-season-12/1578-phase-2-am-sea-cn/5986-china', '3|SLXII'],
+     ['5998-jd-mlg-pro-league-1-tiebreakers/1583-ties/5999-eu-group-a', '1|jDMLG'],
+     ['5831-dota-2-champions-league-5/1528-regions/5832-europe', '2|D2CL'],
     ];
 
     for (k = 0; k < tournaments.length; k++)
@@ -681,7 +689,7 @@ function generate()
     }
     
     out = out + "\n" + m + "\n\n";
-    out = out + "Useful Links:\n\n[Gosubet](http://www.gosugamers.net/dota2/gosubet) | [joinDOTA](http://www.joindota.com/en/start) | [List of teams' dotabuff](http://www.reddit.com/r/dota2loungebets/comments/21g1sz/list_of_dota_2_teams_dotabuffs_v2/) | [How to participate in Guild Chat](http://www.reddit.com/r/dota2loungebets/comments/1qivbl/guild_rd2lb_guild_is_open_for_people_to_join/) | [Dailydota2](http://dailydota2.com) | [Trackdota](http://trackdota.com)";
+    out = out + "Useful Links:\n\n[Gosubet](http://www.gosugamers.net/dota2/gosubet) | [joinDOTA](http://www.joindota.com/en/start) | [Liquipedia](http://wiki.teamliquid.net/dota2/Main_Page) | [List of teams' dotabuff](http://www.reddit.com/r/dota2loungebets/comments/21g1sz/list_of_dota_2_teams_dotabuffs_v2/) | [Twitch Chat and DotA Chat Channel](http://www.reddit.com/r/dota2loungebets/comments/2v4oih/connecting_with_people_outside_the_subreddit/) | [Dailydota2](http://dailydota2.com) | [Trackdota](http://trackdota.com)";
     
     document.getElementById("output").value = out;
     document.getElementById("output").select();
