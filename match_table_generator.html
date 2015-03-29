@@ -284,6 +284,11 @@ function fix_team(team)
      ["Fight Club", "Fight Club"],
      ["Project Dota", "Proj.Dota"],
      ["Tractor", "Tractor"],
+     ["ElysiumGaming", "Elysium"],
+     ["FlipSid3...", "FlipSid3"],
+     ["MY (ex-EHOME.my)", "MY"],
+     ["Boreal eSports", "Boreal"],
+     ["TongFu", "TongFu"],
     ];
             
     for (k = 0; k < teams.length; k++)
@@ -569,6 +574,16 @@ function tournament_string(tournament)
      ['5971-starladder-season-12/1578-phase-2-am-sea-cn/5986-china', '3|SLXII'],
      ['5998-jd-mlg-pro-league-1-tiebreakers/1583-ties/5999-eu-group-a', '1|jDMLG'],
      ['5831-dota-2-champions-league-5/1528-regions/5832-europe', '2|D2CL'],
+     ['5859-the-summit-3/1538-qualifiers-stage-2/5864-europe', '3|Summit'],
+     ['5859-the-summit-3/1538-qualifiers-stage-2/5865-america', '3|Summit'],
+     ['5971-starladder-season-12/1578-phase-2-am-sea-cn/5985-sea', '3|SLXII'],
+     ['5950-mpgl-7-leg-1/1567-class-a/5953-finals', '3|MPGL'],
+     ['5950-mpgl-7-leg-1/1569-playoffs/5955-bubble-race', '3|MPGL'],
+     ['5542-dota-pit-league-season-3/1455-group-stage/5545-group-b', '2|Dota Pit'],
+     ['6105-esl-one-2015-frankfurt-asia-qualifiers/1613-brackets/6106-south-east-asia', '3|ESL'],
+     ['5971-starladder-season-12/1577-phase-2-europe/5982-group-a', '3|SLXII'],
+     ['5859-the-summit-3/1538-qualifiers-stage-2/5867-china', '3|Summit'],
+     ['5971-starladder-season-12/1577-phase-2-europe/5983-group-b', '3|SLXII'],
     ];
 
     for (k = 0; k < tournaments.length; k++)
@@ -589,7 +604,7 @@ function generate()
     
     a = s.split("\n");
     
-    out = "Team 1|  ||Team 2|  |Format|League|[D2Lng](http://www.dota2lounge.com)|[D2W](http://www.dota2wage.com)|[D2BY](http://www.dota2bestyolo.com/)|Notes\n:---------|:---------:|:---------:|:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------\n";
+    out = "Team 1|  |Team 2|  |Format|League|[D2Lng](http://www.dota2lounge.com)|[D2W](http://www.dota2wage.com)|[D2BY](http://www.dota2bestyolo.com/)|[VPG](http://dota2.vpgame.com/?lang=en_us)|Notes\n:---------|:---------:|:---------:|:---------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------\n";
     
     // scan for Upcoming Matches section
     i = 0;
@@ -622,7 +637,7 @@ function generate()
             pct1 = pct1.substr(0,j);
             
             // out = out + "**" + team1 + "**|" + pct1 + "|Vs.|";
-            out = out + "**" + team1 + "**| % |vs|";
+            out = out + "**" + team1 + "**| % |";
             
             // tournament+stage identifier between "tournaments/" and "/matches"
             // in match URI
@@ -678,7 +693,7 @@ function generate()
             
             // out = out + "**" + team2 + "**|" + pct2 + "|";
             out = out + "**" + team2 + "**| % |";
-            out = out + "BO" + tournament_string(tournament) + "|✓|||" + note + "\n";
+            out = out + "BO" + tournament_string(tournament) + "|✓||||" + note + "\n";
         }
         
         // stop once past Upcoming Matches
